@@ -18,7 +18,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 public class BaseTest {
-    protected WebDriver driver;
+    protected static ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
     protected static final String BASE_URL = "http://193.233.193.42:9091";
     protected static final String PROJECT_ID = "QA"; // Для префикса задач, например, QA-57
     protected static String LOGIN;
@@ -46,22 +46,30 @@ public class BaseTest {
         ChromeOptions options = new ChromeOptions();
         // options.addArguments("--headless"); // Раскомментировать, если не нужно видеть браузер
         options.addArguments("--window-size=1920,1080");
-        driver = new ChromeDriver(options);
+        WebDriver driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get(BASE_URL);
+        threadDriver.set(driver); // Установка для этого потока
+    }
+
+    protected WebDriver getDriver() {
+        return threadDriver.get();
     }
 
     @AfterMethod
     public void tearDown(ITestResult result) {
+        WebDriver driver = getDriver();
         if (ITestResult.FAILURE == result.getStatus()) {
             takeScreenshot(result.getName());
         }
         if (driver != null) {
             driver.quit();
+            threadDriver.remove(); // Очистка driver ядра
         }
     }
 
     private void takeScreenshot(String testName) {
+        WebDriver driver = getDriver();
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(screenshot, new File("target/screenshots/" + testName + ".png"));
