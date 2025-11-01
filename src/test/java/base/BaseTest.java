@@ -20,7 +20,7 @@ import org.openqa.selenium.TakesScreenshot;
 public class BaseTest {
     protected WebDriver driver;
     protected static final String BASE_URL = "http://193.233.193.42:9091";
-    protected static final String PROJECT_ID = "QA"; // Для префикса задач, как QA-57
+    protected static final String PROJECT_ID = "QA"; // Для префикса задач, например, QA-57
     protected static String LOGIN;
     protected static String PASSWORD;
 
@@ -44,7 +44,7 @@ public class BaseTest {
     public void setUp() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        // options.addArguments("--headless"); // Раскомментируй, если не нужно видеть браузер
+        // options.addArguments("--headless"); // Раскомментировать, если не нужно видеть браузер
         options.addArguments("--window-size=1920,1080");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));

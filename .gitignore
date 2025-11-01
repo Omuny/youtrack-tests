@@ -1,4 +1,4 @@
-# Java
+### Java ###
 *.class
 *.jar
 *.war
@@ -8,7 +8,7 @@
 *.rar
 hs_err_pid*
 
-# Maven
+### Maven ###
 target/
 .mvn/
 mvnw
@@ -22,18 +22,19 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 
-# IntelliJ IDEA
+### IntelliJ IDEA ###
 .idea/
 *.iml
 *.ipr
 *.iws
 out/
 
-# Logs and misc
+### Logs and misc ###
 *.log
-.DS_Store  # Если на Mac
+# Если на Mac
+.DS_Store
 # Для локальных настроек/секретов
 local.properties
 
-# OS-specific
+### OS-specific ###
 Thumbs.db
