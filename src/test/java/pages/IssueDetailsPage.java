@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.Keys;
 import java.time.Duration;
 
 public class IssueDetailsPage {
@@ -28,7 +29,7 @@ public class IssueDetailsPage {
     public void updateSummary(String newSummary) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(summaryField));
-        driver.findElement(summaryField).clear();
+        driver.findElement(summaryField).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
         driver.findElement(summaryField).sendKeys(newSummary);
     }
 

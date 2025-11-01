@@ -29,7 +29,7 @@ public class DashboardPage {
         wait.until(ExpectedConditions.elementToBeClickable(createButton)).click();
         wait.until(ExpectedConditions.elementToBeClickable(newIssueMenuItem)).click();
 
-        // Ждём открытия новой вкладки и переключаемся на неё
+        // Ждём открытия новой вкладки и переключаемся на неё, если необходимо
         wait.until(ExpectedConditions.numberOfWindowsToBe(originalWindows.size() + 1));
         Set<String> allWindows = driver.getWindowHandles();
         for (String windowHandle : allWindows) {

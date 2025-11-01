@@ -17,6 +17,8 @@ public class IssuesPage {
     }
 
     public void searchIssue(String issueId) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(searchField));
         driver.findElement(searchField).clear();
         driver.findElement(searchField).sendKeys(issueId + "\n");
     }
@@ -24,11 +26,5 @@ public class IssuesPage {
     public boolean isIssuePresent(String issueId) {
         By issueLocator = By.xpath("//a[contains(@data-test,'ring-link ticket-id')][contains(text(),'" + issueId + "')]");
         return driver.findElements(issueLocator).size() > 0;
-    }
-
-    public void openIssue(String issueId) {
-        By issueLocator = By.xpath("//a[contains(@data-test,'ring-link ticket-id')][contains(text(),'" + issueId + "')]");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(issueLocator)).click();
     }
 }
