@@ -1,4 +1,4 @@
-package base;
+package tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -9,35 +9,25 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.Properties;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
+import helper.LocalReader;
+
 public class BaseTest {
     protected static ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
-    protected static final String BASE_URL = "http://193.233.193.42:9091";
-    protected static final String PROJECT_ID = "QA"; // Для префикса задач, например, QA-57
+    protected static String BASE_URL;
     protected static String LOGIN;
     protected static String PASSWORD;
 
     static {
-        try {
-            Properties props = new Properties();
-            FileInputStream fis = new FileInputStream("local.properties");
-            props.load(fis);
-            LOGIN = props.getProperty("login");
-            PASSWORD = props.getProperty("password");
-            if (LOGIN == null || PASSWORD == null) {
-                throw new RuntimeException("Login or password not found in local.properties");
-            }
-            fis.close();
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load local.properties: " + e.getMessage());
-        }
+        // Инициализация статических полей через LocalReader
+        BASE_URL = LocalReader.getBaseUrl();
+        LOGIN = LocalReader.getLogin();
+        PASSWORD = LocalReader.getPassword();
     }
 
     @BeforeMethod

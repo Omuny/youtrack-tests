@@ -9,6 +9,7 @@ import java.time.Duration;
 public class IssuesPage {
     private final WebDriver driver;
     private final By searchField = By.cssSelector("input[data-test='ring-select__focus'][placeholder='Поиск по тексту или добавление фильтра']");
+    private final String issueLocator = "//a[contains(@data-test,'ring-link ticket-id')][contains(text(),'%s')]";
 
     public IssuesPage(WebDriver driver) {
         this.driver = driver;
@@ -24,7 +25,6 @@ public class IssuesPage {
     }
 
     public boolean isIssuePresent(String issueId) {
-        By issueLocator = By.xpath("//a[contains(@data-test,'ring-link ticket-id')][contains(text(),'" + issueId + "')]");
-        return driver.findElements(issueLocator).size() > 0;
+        return driver.findElements(By.xpath(String.format(issueLocator, issueId))).size() > 0;
     }
 }
