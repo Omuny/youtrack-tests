@@ -38,6 +38,8 @@ public class IssueDetailsPage {
     }
 
     public String getDisplayedSummary() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(displayedSummary));
         return driver.findElement(displayedSummary).getText();
     }
 

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="YouTrack Test Suite" thread-count="2" parallel="methods">
-    <test name="Tests">
+<suite name="YouTrack Test Suite" thread-count="2" parallel="classes">
+    <test name="Selenium Tests">
         <classes>
-            <class name="tests.YouTrackTests"/>
+            <class name="tests.NegLoginTest"/>
+            <class name="tests.PosLoginTest"/>
+            <class name="tests.NegCreateIssueTest"/>
+            <class name="tests.PosCreateIssueTest"/>
+            <class name="tests.EditIssueTest"/>
+            <class name="tests.DeleteIssueTest"/>
         </classes>
     </test>
 </suite>

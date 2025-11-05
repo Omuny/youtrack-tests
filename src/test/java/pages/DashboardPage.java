@@ -12,6 +12,7 @@ public class DashboardPage {
     private final By createButton = By.cssSelector("span[aria-label='Создать']"); // Кнопка "Создать" на sidebar
     private final By newIssueMenuItem = By.xpath("//a[contains(@href, 'newIssue') or contains(text(),'Новая задача')]"); // В меню после клика "Создать"
     private final By issuesLink = By.xpath("//a[contains(@href, 'issues')]");
+    private Set<String> originalWindows;
 
     public DashboardPage(WebDriver driver) {
         this.driver = driver;
@@ -23,7 +24,7 @@ public class DashboardPage {
     }
 
     public void clickCreateNewIssue() {
-        Set<String> originalWindows = driver.getWindowHandles();
+        originalWindows = driver.getWindowHandles();
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(createButton)).click();

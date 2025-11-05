@@ -4,6 +4,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -12,10 +15,10 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 
 import helper.LocalReader;
+import pages.DashboardPage;
+import pages.LoginPage;
 
 public class BaseTest {
     protected static ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
@@ -40,6 +43,15 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get(BASE_URL);
         threadDriver.set(driver); // Установка для этого потока
+    }
+
+    @BeforeMethod(onlyForGroups = "requiresLogin", dependsOnMethods = "setUp")
+    public void loginIfNeeded() {
+        // Для тестов, требующих авторизации (кроме login тестов)
+        LoginPage loginPage = new LoginPage(getDriver());
+        loginPage.login(LOGIN, PASSWORD);
+        DashboardPage dashboardPage = new DashboardPage(getDriver());
+        Assert.assertTrue(dashboardPage.isDashboardLoaded(), "Dashboard not loaded after login");
     }
 
     protected WebDriver getDriver() {

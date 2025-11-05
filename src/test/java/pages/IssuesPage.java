@@ -13,8 +13,6 @@ public class IssuesPage {
 
     public IssuesPage(WebDriver driver) {
         this.driver = driver;
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(searchField));
     }
 
     public void searchIssue(String issueId) {
@@ -25,6 +23,8 @@ public class IssuesPage {
     }
 
     public boolean isIssuePresent(String issueId) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(searchField));
         return driver.findElements(By.xpath(String.format(issueLocator, issueId))).size() > 0;
     }
 }
