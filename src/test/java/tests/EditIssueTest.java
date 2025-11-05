@@ -52,7 +52,7 @@ public class EditIssueTest extends BaseTest {
         issueDetailsPage.deleteIssue();
 
         // Проверка удаления
-        driver.navigate().refresh();
+        driver.navigate().to(BASE_URL + "/issues");
         issuesPage = new IssuesPage(driver);
         Assert.assertFalse(issuesPage.isIssuePresent(issueId), "Issue not deleted");
 

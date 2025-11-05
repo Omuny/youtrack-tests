@@ -6,29 +6,26 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
-public class NewIssuePage {
-    private final WebDriver driver;
+public class NewIssuePage extends BasePage{
     private final By summaryInput = By.cssSelector("textarea[data-test='summary']");
     private final By descriptionTextarea = By.cssSelector("div[data-test='wysiwyg-editor-content']");
     private final By createButton = By.cssSelector("button[data-test='submit-button']");
 
     public NewIssuePage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public void enterSummary(String summary) {
-        driver.findElement(summaryInput).sendKeys(summary);
+        sendKeysToElement(summaryInput, summary);
     }
 
     public void enterDescription(String description) {
-        // click для фокуса, после sendKeys
-        driver.findElement(descriptionTextarea).click();
-        driver.findElement(descriptionTextarea).sendKeys(description);
+        clickElement(descriptionTextarea);
+        sendKeysToElement(descriptionTextarea, description);
     }
 
     public void clickCreate() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(createButton)).click();
+        clickElement(createButton);
     }
 
     public boolean isCreateButtonEnabled() {
@@ -36,12 +33,9 @@ public class NewIssuePage {
     }
 
     public String getCreatedIssueId() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.urlContains("/issue/"));
+        wait.until(driver -> driver.getCurrentUrl().contains("/issue/"));
         String url = driver.getCurrentUrl();
-        // Разбиваем URL на сегменты по "/"
         String[] parts = url.split("/");
-        // IssueId — предпоследний сегмент
         if (parts.length >= 2) {
             return parts[parts.length - 2];
         } else {

@@ -56,6 +56,11 @@ public class PosCreateIssueTest extends BaseTest {
         issuesPage.searchIssue(issueId);
         issueDetailsPage.deleteIssue();
 
+        // Проверка удаления
+        driver.navigate().to(BASE_URL + "/issues");
+        issuesPage = new IssuesPage(driver);
+        Assert.assertFalse(issuesPage.isIssuePresent(issueId), "Issue not deleted");
+
         System.out.println("Positive create issue test passed for: " + summary);
     }
 }
